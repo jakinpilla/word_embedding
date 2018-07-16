@@ -37,13 +37,13 @@ model= gensim.models.word2vec.Word2Vec(sentences=sentence_list, sg=0,
 # print(model)
 # print(model.wv.vocab.keys())
 
-model.most_similar(positive=['국방'], topn=30)
-model.most_similar(positive=['북한'], topn=30)
-model.most_similar(positive=['정당'], topn=30)
-model.most_similar(positive=['박근혜'], topn=30)
-model.most_similar(positive=['탄핵'], topn=30)
+model.most_similar(positive=['최순실/Noun'], topn=30)
+model.most_similar(positive=['북한/Noun'], topn=30)
+model.most_similar(positive=['정당/Noun'], topn=30)
+model.most_similar(positive=['박근혜/Noun'], topn=30)
+model.most_similar(positive=['탄핵/Noun'], topn=30)
 
-model['국방']
+model['국방/Noun']
 
 w2v = {w: vec for w, vec in zip(model.wv.index2word, model.wv.syn0)}
 w2v
@@ -75,9 +75,6 @@ etree_w2v = Pipeline([("word2vec vectorizer", MeanEmbeddingVectorizer(w2v)),
 etree_w2v_tfidf = Pipeline([("word2vec vectorizer", TfidfEmbeddingVectorizer(w2v)),
                             ("extra trees", ExtraTreesClassifier(n_estimators=200))])
 
-
-# model test
-etree_w2v_tfidf.fit(X_train, y_train).predict(X_test)
     
 # prepare data
 X = np.array(sentence_list)
@@ -121,6 +118,7 @@ for name, model in all_models:
         table.append({'model': name, 
                       'accuracy': benchmark(model, X, y, n), 
                       'train_size': n})
+    
 df = pd.DataFrame(table)
 df
 
@@ -132,3 +130,6 @@ fig.set(ylabel="accuracy")
 fig.set(xlabel="labeled training examples")
 fig.set(title="Benchmark Reult")
 fig.set(ylabel="accuracy")
+
+
+
