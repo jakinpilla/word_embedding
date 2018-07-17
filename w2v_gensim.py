@@ -79,6 +79,7 @@ etree_w2v_tfidf = Pipeline([("word2vec vectorizer", TfidfEmbeddingVectorizer(w2v
 # prepare data
 X = np.array(sentence_list)
 X
+X.shape
 news_dataset = pd.read_csv('./data/news_dataset.csv', index_col=0)
 news_dataset.columns
 y = np.array(news_dataset['label'])
